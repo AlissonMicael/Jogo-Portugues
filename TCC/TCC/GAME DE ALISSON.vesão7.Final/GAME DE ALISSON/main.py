@@ -34,7 +34,7 @@ janela_aberta = False
 # Time do jogo
 tempo = pygame.time.Clock()
 crono = cronometro.Cronometro()
-delay_para_criar_papel = 10
+delay_para_criar_papel = 8
 
 # Musica de fundo
 pygame.mixer.music.set_volume(0.4)
@@ -57,7 +57,7 @@ colidiu = False
 colidiu2 = False
 
 janela = pygame.display.set_mode((900, 600))
-pygame.display.set_caption("Quem disse que eu não sei Português?")
+pygame.display.set_caption("Portugame")
 
 # Grupo do Player
 grupo_player = pygame.sprite.GroupSingle()
@@ -78,7 +78,8 @@ quarta_font = pygame.font.SysFont('arial black', 13)
 font_pq = pygame.font.SysFont('arial black', 10)
 
 # Sorteando a pergunta
-num_sorteado_pergunta = random.randint(0, 2)
+num_sorteado_pergunta = random.randint(0, 9)
+print(num_sorteado_pergunta)
 
 temp = ""
 pontos = 0
@@ -130,7 +131,7 @@ while janela_aberta:
         if colidiu2 and not respondido:
             if keys[pygame.K_s]:
                 esrtaPresionado = True
-                if num_sorteado_pergunta != 0:
+                if num_sorteado_pergunta < 5:
                     texto_s = True
                     musica_crt.play()
                 else:
@@ -139,7 +140,7 @@ while janela_aberta:
                 respondido = True
             if keys[pygame.K_n]:
                 esrtaPresionadon = True
-                if num_sorteado_pergunta == 0:
+                if num_sorteado_pergunta > 5:
                     texto_s = True
                     musica_crt.play()
                 else:
@@ -227,23 +228,39 @@ while janela_aberta:
 
         # perguntas
         list_perguntas = [
-            'Já compramos_ ovos leite e chocolate.',
-            'Vamos comer_ gente?',
-            'Brasília_ 10 de fevereiro de 1999'
+            'Precisa-se de voluntários para o projeto de limpeza. Essa frase possui sujeito indeterminado?',
+            'A frase "O menino estava com fome. Ele comeu um sanduíche." possui coesão?',
+            'A conjunção "além de" é um termo que estabelece uma ideia de adição?',
+            'É necessário o uso da vírgula na frase? Já compramos ovos_ leite e chocolate.',
+            'É necessário o uso da vírgula na frase ? Estamos esperando_ pessoal.',
+            'A frase abaixo requer o uso de ponto de interrogação? Você já terminou o seu trabalho_',
+            'É necessário o uso da vírgula na frase ? Ele foi_ comigo.',
+            'Era uma vez um reino distante e encantado. Há sujeito composto nessa frase?',
+            'Choveu bastante na semana passada. Essa frase possui sujeito indeterminado?',
+            'É necessário a utilização do ponto final na frase? O que você vai fazer agora_'
         ]
         list_PorQue = [
-            'Virgula obrigatoria para separar termos numa enumeração',
-            'Virgula obrigatoria para separar vocativo',
-            'Virgula obrigatoria entre nomes de lugares e datas ou endereços'
+            'Sim, há sujeito indeterminado, pois não se especifica quem precisa de voluntários para o projeto de limpeza.',
+            'Sim, pois o pronome “ele” conecta as duas frases, mostrando que a ação de comer o sanduíche foi realizada pelo menino'
+            'Sim, a conjunção "além de" é um termo aditivo, pois indica soma, acréscimo ou adição de ideias.',
+            'Sim, vírgula obrigatória para separar termos numa enumeração',
+            'Sim, vírgula obrigatória para separar vocativo.',
+            'Sim, a frase "Você já terminou o seu trabalho," requer o uso de ponto de interrogação e isso ocorre porque a frase é uma pergunta direta.',
+            'Não, vírgula não necessária, pois não há vocativo.',
+            'Não, não há sujeito composto. A frase apresenta apenas um sujeito simples, "um reino distante e encantado", que se refere a um único conceito',
+            'Não, há uma oração sem sujeito, pois a frase não especifica quem realizou a ação de chover, apenas menciona a ocorrência do evento.',
+            'Não, o ponto final não é necessário, pois a frase é uma pergunta.'
+
+
         ]
 
         # Mostrandp pergunta, resposta e o porque.
-        texto = segunda_font.render(
-            'Acerte se tem ou não virgula:', True, (0, 0, 0), (189, 141, 75)
-        )
-        pos_dois_tex = texto.get_rect()
-        pos_dois_tex.center = (490, 230)
-        janela.blit(texto, pos_dois_tex)
+        # texto = segunda_font.render(
+        #     'Acerte se tem ou não virgula:', True, (0, 0, 0), (189, 141, 75)
+        # )
+        # pos_dois_tex = texto.get_rect()
+        # pos_dois_tex.center = (490, 230)
+        # janela.blit(texto, pos_dois_tex)
 
         texto = terceira_font.render(
             list_perguntas[num_sorteado_pergunta], True, (0, 0, 0), (189, 141, 75)
@@ -253,7 +270,7 @@ while janela_aberta:
         janela.blit(texto, pos_dois_tex)
 
         texto = quarta_font.render(
-            "Digite (S) 'Sim, Tem' ou (N) 'Não tem' virgula:", True, (0, 0, 0), (189, 141, 75)
+            "Digite (S) 'Sim, Tem' ou (N) 'Não tem':", True, (0, 0, 0), (189, 141, 75)
         )
         pos_dois_tex = texto.get_rect()
         pos_dois_tex.center = (490, 300)
@@ -262,7 +279,7 @@ while janela_aberta:
         # Mostrando se acertou ou nao e o porque
         if esrtaPresionado:
             if texto_s:
-                texto1 = escrevendo_texto2("Parabens, voce acertou se usa virgula aqui.", 13)
+                texto1 = escrevendo_texto2("Parabens, voce acertou.", 13)
                 janela.blit(texto1, (330, 330))
 
                 texto2 = escrevendo_texto(list_PorQue[num_sorteado_pergunta], 10, (490, 360))
@@ -272,7 +289,7 @@ while janela_aberta:
                 texto1 = escrevendo_texto("sinto muito, mas voce errou.", 13, (490, 340))
                 janela.blit(texto1[0], texto1[1])
 
-                texto2 = escrevendo_texto("Pois nao era nessesario o uso da virgula.", 13, (490, 360))
+                texto2 = escrevendo_texto("Vamos treinar mais um pouco", 13, (490, 360))
                 janela.blit(texto2[0], texto2[1])
 
                 texto3 = escrevendo_texto(list_PorQue[num_sorteado_pergunta], 10, (490, 380))
@@ -280,7 +297,7 @@ while janela_aberta:
 
         if esrtaPresionadon:
             if texto_s:
-                texto1 = escrevendo_texto("Parabens, voce acertou nao se usa virgula aqui.", 13, (490, 340))
+                texto1 = escrevendo_texto("Parabens, voce acertou", 13, (490, 340))
                 janela.blit(texto1[0], texto1[1])
 
                 texto2 = escrevendo_texto(list_PorQue[num_sorteado_pergunta], 10, (490, 360))
@@ -290,7 +307,7 @@ while janela_aberta:
                 texto1 = escrevendo_texto("sinto muito, mas voce errou.", 13, (490, 340))
                 janela.blit(texto1[0], texto1[1])
 
-                texto2 = escrevendo_texto("Pois nao era nessesario o uso da virgula.", 13, (490, 360))
+                texto2 = escrevendo_texto("Vamos treinar mais um pouco", 13, (490, 360))
                 janela.blit(texto2[0], texto2[1])
 
                 texto3 = escrevendo_texto(list_PorQue[num_sorteado_pergunta], 10, (490, 380))
