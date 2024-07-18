@@ -253,7 +253,6 @@ while janela_aberta:
 
 
         ]
-
         # Mostrandp pergunta, resposta e o porque.
         # texto = segunda_font.render(
         #     'Acerte se tem ou não virgula:', True, (0, 0, 0), (189, 141, 75)
